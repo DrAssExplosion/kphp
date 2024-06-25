@@ -2328,7 +2328,7 @@ int check_constructors_equal(struct tl_combinator_tree *L, struct tl_combinator_
     return 0;
   }
   __tok = 1;
-  _T = T;
+  //_T = T;
   tree_act_var_value(*T, check_nat_val);
   return __tok;
 }

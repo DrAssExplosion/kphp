@@ -24,6 +24,7 @@ shared_data_t *shared_data;
 master_data_t *me, *other; // these are pointers to shared memory
 
 void init_mutex(pthread_mutex_t *mutex) {
+  #ifndef MSYS
   pthread_mutexattr_t attr;
 
   int err;
@@ -36,6 +37,7 @@ void init_mutex(pthread_mutex_t *mutex) {
 
   err = pthread_mutex_init(mutex, &attr);
   assert (err == 0 && "failed to init mutex");
+  #endif
 }
 
 void shared_data_init(shared_data_t *data) {

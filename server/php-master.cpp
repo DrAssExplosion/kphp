@@ -611,7 +611,9 @@ int run_worker(WorkerType worker_type) {
   dl_assert(new_pid != -1, "failed to fork");
 
   if (new_pid == 0) {
-    prctl(PR_SET_PDEATHSIG, SIGKILL); // TODO: or SIGTERM
+    #ifndef MSYS
+      prctl(PR_SET_PDEATHSIG, SIGKILL); // TODO: or SIGTERM
+    #endif
     if (getppid() != me->pid) {
       kprintf("parent process is dead just after start\n");
       exit(123);

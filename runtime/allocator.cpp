@@ -303,7 +303,7 @@ MemoryReplacementGuard::~MemoryReplacementGuard() {
 } // namespace dl
 
 // sanitizers aren't happy with custom realization of malloc-like functions
-#if !ASAN_ENABLED and !defined(__APPLE__)
+#if !ASAN_ENABLED and !defined(__APPLE__) and !defined(MSYS)
 
 extern "C" void *__libc_malloc(size_t size);
 extern "C" void *__libc_calloc(size_t nmemb, size_t size);

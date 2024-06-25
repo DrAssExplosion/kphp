@@ -4,7 +4,9 @@
 
 #pragma once
 
-#include <sanitizer/asan_interface.h>
+#ifndef MSYS
+  #include <sanitizer/asan_interface.h>
+#endif
 
 #if defined(__SANITIZE_ADDRESS__)
 # define ASAN_ENABLED 1

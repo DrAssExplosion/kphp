@@ -5,6 +5,8 @@
 #if defined(__APPLE__)
 struct bitmask {};
 struct cpu_set_t {};
+#elif defined(MSYS)
+struct bitmask {};
 #else
 #include <numa.h>
 #endif

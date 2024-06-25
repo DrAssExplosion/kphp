@@ -4,7 +4,11 @@
 
 #include "vkext/vkext.h"
 
-#include <execinfo.h>
+#ifndef MSYS
+  #include <execinfo.h>
+#else
+  #include "common/plug_execinfo.h"
+#endif
 #include <php_ini.h>
 #include <signal.h>
 #include <stddef.h>

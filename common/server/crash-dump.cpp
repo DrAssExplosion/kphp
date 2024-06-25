@@ -61,8 +61,12 @@ static inline void crash_dump_write_reg(const char* reg_name, size_t reg_name_si
 #define LITERAL_WITH_LENGTH(literal) literal, sizeof(literal) - 1
 
 static inline void crash_dump_prepare_registers(crash_dump_buffer_t *buffer, void *ucontext) {
+#ifdef MSYS
+  if (buffer && ucontext) {}
+#else
 #ifdef __x86_64__
 #ifdef __APPLE__
+//#if defined(__APPLE__) || defined(MSYS)
   const auto *uc = static_cast<ucontext_t *>(ucontext);
 
   crash_dump_write_reg(LITERAL_WITH_LENGTH("RIP=0x"), uc->uc_mcontext->__ss.__rip, buffer);
@@ -154,6 +158,7 @@ static inline void crash_dump_prepare_registers(crash_dump_buffer_t *buffer, voi
   crash_dump_write_reg(LITERAL_WITH_LENGTH("X28=0x"), uc->uc_mcontext.regs[28], buffer);
 #else
 #error "Unsupported arch"
+#endif
 #endif
 }
 

@@ -1,7 +1,9 @@
 #include <gtest/gtest.h>
 #include <mutex>
 #include <thread>
-#include <sys/syscall.h>
+#ifndef MSYS
+  #include <sys/syscall.h>
+#endif
 
 #include "runtime/inter-process-mutex.h"
 #include "server/php-engine-vars.h"
@@ -24,7 +26,9 @@ template<class F>
 auto with_this_pid(F f) noexcept {
   static std::mutex pid_mutex;
   std::lock_guard<std::mutex> l{pid_mutex};
+#ifndef MSYS
   pid = syscall(SYS_gettid);
+#endif
   return f();
 }
 

@@ -13,7 +13,7 @@
 
 #include "compiler/threading/tls.h"
 
-#if !ASAN_ENABLED && !defined(__clang__)
+#if !ASAN_ENABLED && !defined(__clang__) && !defined(MSYS)
 extern "C" {
 extern decltype(malloc) __libc_malloc;
 extern decltype(free) __libc_free;

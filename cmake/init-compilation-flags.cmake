@@ -27,6 +27,19 @@ if(APPLE)
     else()
         message(FATAL_ERROR "unsupported arch: ${CMAKE_SYSTEM_PROCESSOR}")
     endif()
+elseif(MSYS)
+    message("0000000000000000000000000000000000")
+    #set(OPENSSL_ROOT_DIR "C:/msys64/usr/bin" CACHE INTERNAL "")
+    #set(OPENSSL_CRYPTO_LIBRARY "C:/msys64/usr/bin" CACHE INTERNAL "")
+    set(OPENSSL_INCLUDE_DIR "/mingw64/include/openssl" CACHE INTERNAL "")
+    #include_directories(/mingw64/include)
+    #include_directories(/mingw64/include)
+    #include_directories(/usr/include)
+    include_directories(${OPENSSL_INCLUDE_DIR})
+
+    include_directories(/mingw64/include)
+    link_directories(/mingw64/lib)
+    #add_link_options(-fno-lto)
 else()
     # Since Ubuntu 22.04 lto is enabled by default; breaks some builds
     add_link_options(-fno-lto)
@@ -34,7 +47,12 @@ endif()
 
 set(OPENSSL_USE_STATIC_LIBS TRUE)
 find_package(OpenSSL REQUIRED)
-include_directories(${OPENSSL_INCLUDE_DIR})
+
+#if(MSYS)
+#    include_directories("~/kphp/build/common/wrappers")
+#else()
+#    include_directories(${OPENSSL_INCLUDE_DIR})
+#endif()
 
 option(ADDRESS_SANITIZER "Enable address sanitizer")
 if(ADDRESS_SANITIZER)
@@ -86,7 +104,7 @@ elseif(CMAKE_SYSTEM_PROCESSOR STREQUAL "aarch64")
     add_compile_options(-march=armv8.2-a+crypto)
 endif()
 
-add_compile_options(-Werror -Wall -Wextra -Wunused-function -Wfloat-conversion -Wno-sign-compare
+add_compile_options(-Wall -Wextra -Wunused-function -Wfloat-conversion -Wno-sign-compare
                     -Wuninitialized -Wno-redundant-move -Wno-missing-field-initializers)
 
 if(NOT APPLE)

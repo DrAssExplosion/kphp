@@ -16,6 +16,7 @@
 #include "common/options.h"
 
 int maxconn = MAX_CONNECTIONS;
+int kDefaultNumberOfLivingProcesses = 38688;
 
 void set_maxconn (const char *arg) {
   maxconn = atoi (arg);
@@ -32,7 +33,15 @@ OPTION_PARSER_SHORT(OPT_NETWORK, "connections", 'c', required_argument, "sets ma
 int raise_proc_rlimit(int maxprocesses) {
   struct rlimit rlim;
 
-  if (getrlimit(RLIMIT_NPROC, &rlim) != 0) {
+  #ifdef MSYS
+    const bool isGetRlimitFailed = false;
+    rlim.rlim_cur = kDefaultNumberOfLivingProcesses;
+    rlim.rlim_max = kDefaultNumberOfLivingProcesses;
+  #else
+      const bool isGetRlimitFailed = getrlimit(RLIMIT_NPROC, &rlim) != 0;
+  #endif
+
+  if (isGetRlimitFailed) {
     kprintf("failed to getrlimit number of processes: %m\n");
     return -1;
   } else {
@@ -42,7 +51,15 @@ int raise_proc_rlimit(int maxprocesses) {
     if (rlim.rlim_max < rlim.rlim_cur) {
       rlim.rlim_max = rlim.rlim_cur;
     }
-    if (setrlimit(RLIMIT_NPROC, &rlim) != 0) {
+
+      const bool isSetRlimitFailed =
+      #ifdef MSYS
+        false;
+      #else
+        setrlimit(RLIMIT_NPROC, &rlim) != 0;
+      #endif
+
+    if (isSetRlimitFailed) {
       kprintf("failed to set rlimit for child processes: %m. Try running as root.\n");
       return -1;
     }

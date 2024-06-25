@@ -285,7 +285,7 @@ STATS_PROVIDER(resource_usage, 1000) {
   if (!getrusage(RUSAGE_SELF, &usage)) {
     resource_usage_statistics(stats, "", &usage);
   }
-#if !defined(__APPLE__)
+#if !defined(__APPLE__) && !defined(MSYS)
   if (!getrusage(RUSAGE_THREAD, &usage)) {
     resource_usage_statistics(stats, "thread_", &usage);
   }

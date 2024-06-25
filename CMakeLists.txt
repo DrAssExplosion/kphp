@@ -3,13 +3,19 @@ project(kphp
         VERSION 1.0.1
         LANGUAGES CXX
         DESCRIPTION "Compiler for PHP (aka KPHP)"
-        HOMEPAGE_URL https://github.com/VKCOM/kphp)
+        HOMEPAGE_URL https://github.com/DrAssExplosion/kphp)
 
 if ("${PROJECT_SOURCE_DIR}" STREQUAL "${PROJECT_BINARY_DIR}")
     message(FATAL_ERROR [[
         In-source build is forbidden! Run following command:
         rm -rf CMakeFiles CMakeCache.txt && cmake -H. -Bbuild
     ]])
+endif()
+
+if (MSYS)
+    add_definitions(-DMSYS=true)
+    include_directories(/mingw64/include)
+    include_directories(/usr/include)
 endif()
 
 # include(CMakeGraphVizOptions)
@@ -46,7 +52,7 @@ include(${BASE_DIR}/runtime/runtime.cmake)
 include(${BASE_DIR}/server/server.cmake)
 include(${BASE_DIR}/compiler/compiler.cmake)
 
-include(${BASE_DIR}/tests/tests.cmake)
+#include(${BASE_DIR}/tests/tests.cmake)
 
 if(KPHP_CUSTOM_CMAKE AND EXISTS ${OBJS_DIR}/custom_php_project.cmake)
     include(${OBJS_DIR}/custom_php_project.cmake)

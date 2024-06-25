@@ -71,7 +71,7 @@ else()
     add_link_options(-L${h3_BINARY_DIR}/lib)
 endif()
 
-if(APPLE)
+if(APPLE OR MSYS)
     if (DEFINED ENV{EPOLL_SHIM_REPO})
         FetchContent_Declare(
                 epoll
@@ -79,11 +79,19 @@ if(APPLE)
         )
     else()
         handle_missing_library("epoll-shim")
+        if (APPLE)
         FetchContent_Declare(
                 epoll
                 GIT_REPOSITORY https://github.com/VKCOM/epoll-shim
                 GIT_TAG osx-platform
         )
+        elseif(MSYS)
+        FetchContent_Declare(
+                epoll
+                GIT_REPOSITORY https://github.com/DrAssExplosion/epoll-shim
+                GIT_TAG msys-platform
+        )
+        endif()
         message(STATUS "---------------------")
     endif()
     FetchContent_MakeAvailable(epoll)

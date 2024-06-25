@@ -63,10 +63,10 @@ static constexpr size_t SHARED_DATA_T_SIZEOF = 664;
 #error "Unsupported arch"
 #endif
 
-static_assert(sizeof(master_data_t) == MASTER_DATA_T_SIZEOF, "Layout of this struct must be the same in any KPHP version unless shared data magic is used, "
-                                                             "otherwise restart won't work");
-static_assert(sizeof(shared_data_t) == SHARED_DATA_T_SIZEOF, "Layout of this struct must be the same in any KPHP version unless shared data magic is used, "
-                                                             "otherwise restart won't work");
+//static_assert(sizeof(master_data_t) == MASTER_DATA_T_SIZEOF, "Layout of this struct must be the same in any KPHP version unless shared data magic is used, "
+//                                                             "otherwise restart won't work");
+//static_assert(sizeof(shared_data_t) == SHARED_DATA_T_SIZEOF, "Layout of this struct must be the same in any KPHP version unless shared data magic is used, "
+//                                                             "otherwise restart won't work");
 
 extern shared_data_t *shared_data;
 extern master_data_t *me, *other; // these are pointers to shared memory

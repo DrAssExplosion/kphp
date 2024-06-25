@@ -6,7 +6,9 @@
 
 #include <cerrno>
 #include <cstring>
-#include <sys/syscall.h>
+#ifndef MSYS
+  #include <sys/syscall.h>
+#endif
 
 #include "common/macos-ports.h"
 
@@ -19,13 +21,15 @@ pid_t get_main_thread_id() noexcept {
 }
 
 void __attribute__ ((noinline)) check_that_tid_and_cached_pid_same() noexcept {
-  // to avoid calling gettid syscall each time, trust pid global var, but check periodically
-  // if this assert trigger, that means that runtime use several threads or pid is not updated
-  php_assert(get_main_thread_id() == syscall(SYS_gettid));
+  #ifndef MSYS
+    // to avoid calling gettid syscall each time, trust pid global var, but check periodically
+    // if this assert trigger, that means that runtime use several threads or pid is not updated
+    php_assert(get_main_thread_id() == syscall(SYS_gettid));
+  #endif
 }
 
 long __attribute__ ((noinline)) futex(pid_t *lock, int command) noexcept {
-#if defined(__APPLE__)
+#if defined(__APPLE__) ||  defined(MSYS)
   static_cast<void>(lock);
   static_cast<void>(command);
   errno = EAGAIN;

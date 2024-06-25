@@ -7,7 +7,11 @@
 #include <cerrno>
 #include <cstdlib>
 #include <cstring>
-#include <execinfo.h>
+//#ifndef MSYS
+//  #include <execinfo.h>
+//#else
+  #include "common/plug_execinfo.h"
+//#endif
 #include <fcntl.h>
 #include <pthread.h>
 #include <unistd.h>
@@ -117,7 +121,7 @@ const char *signal_shortname(int sig) {
     case SIGIO: return "SIGIO";
     case SIGSYS: return "SIGSYS";
     default: {
-#if !defined(__APPLE__)
+#if !defined(__APPLE__) && !defined(MSYS)
       if (sig == SIGPWR) { return "SIGPWR"; }
       if (sig == SIGSTKFLT) { return "SIGSTKFLT"; }
       if (sig == SIGRTMAX - 0) { return "SIGRTMAX"; }

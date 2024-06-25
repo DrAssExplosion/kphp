@@ -6,13 +6,17 @@
 
 #include <algorithm>
 #include <cassert>
-#include <execinfo.h>
+#ifndef MSYS
+  #include <execinfo.h>
+#else
+  #include "common/plug_execinfo.h"
+#endif
 
 #include "common/sanitizer.h"
 
 char *stack_end;
 
-#ifndef __APPLE__
+#if !defined(__APPLE__) && !defined(MSYS)
 extern void *__libc_stack_end;
 #endif
 
@@ -34,7 +38,7 @@ static __inline__ void *get_bp() {
 }
 
 int fast_backtrace(void **buffer, int size) {
-#ifndef __APPLE__
+#if !defined(__APPLE__) && !defined(MSYS)
   if (!stack_end) {
     stack_end = static_cast<char *>(__libc_stack_end);
   }
@@ -58,7 +62,7 @@ int fast_backtrace_by_bp(void *bp, void *stack_end_, void **buffer, int size) {
 }
 
 int fast_backtrace_without_recursions(void **buffer, int size) noexcept {
-#ifndef __APPLE__
+#if !defined(__APPLE__) && !defined(MSYS)
   if (!stack_end) {
     stack_end = static_cast<char *>(__libc_stack_end);
   }

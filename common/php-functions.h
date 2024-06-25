@@ -9,7 +9,7 @@
 #include <cctype>
 #include <limits>
 #include <type_traits>
-
+#include <stdint.h>
 #include "common/sanitizer.h"
 
 constexpr int STRLEN_WARNING_FLAG = 1 << 30;

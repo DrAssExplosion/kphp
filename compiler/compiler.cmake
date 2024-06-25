@@ -240,19 +240,36 @@ prepend(VERTEX_AUTO_GENERATED ${KPHP_COMPILER_AUTO_DIR}/vertex/
         foreach-op.h
         is-base-of.h)
 
+if(MSYS)
+add_custom_command(OUTPUT ${VERTEX_AUTO_GENERATED}
+                   COMMAND python ${KPHP_COMPILER_DIR}/vertex-gen.py --auto ${AUTO_DIR} --config ${KPHP_COMPILER_DIR}/vertex-desc.json
+                   DEPENDS ${KPHP_COMPILER_DIR}/vertex-gen.py ${KPHP_COMPILER_DIR}/vertex-desc.json
+                   COMMENT "vertices generation")
+else()
 add_custom_command(OUTPUT ${VERTEX_AUTO_GENERATED}
                    COMMAND ${Python3_EXECUTABLE} ${KPHP_COMPILER_DIR}/vertex-gen.py --auto ${AUTO_DIR} --config ${KPHP_COMPILER_DIR}/vertex-desc.json
                    DEPENDS ${KPHP_COMPILER_DIR}/vertex-gen.py ${KPHP_COMPILER_DIR}/vertex-desc.json
                    COMMENT "vertices generation")
+endif()
+
 add_custom_target(auto_vertices_generation_target DEPENDS ${VERTEX_AUTO_GENERATED})
 
 prepend(EARLY_OPT_RULES_AUTO_GENERATED ${KPHP_COMPILER_AUTO_DIR}/rewrite-rules/
         early_opt.h
         early_opt.cpp)
+
+if(MSYS)
 add_custom_command(OUTPUT ${EARLY_OPT_RULES_AUTO_GENERATED}
+        COMMAND python ${KPHP_COMPILER_DIR}/rewrite-rules/rules-gen.py --auto ${AUTO_DIR} --schema ${KPHP_COMPILER_DIR}/vertex-desc.json --rules ${KPHP_COMPILER_DIR}/rewrite-rules/early_opt.rules
+        DEPENDS ${KPHP_COMPILER_DIR}/rewrite-rules/rules-gen.py ${KPHP_COMPILER_DIR}/rewrite-rules/early_opt.rules
+        COMMENT "early_opt rules generation")
+else()
+        add_custom_command(OUTPUT ${EARLY_OPT_RULES_AUTO_GENERATED}
         COMMAND ${Python3_EXECUTABLE} ${KPHP_COMPILER_DIR}/rewrite-rules/rules-gen.py --auto ${AUTO_DIR} --schema ${KPHP_COMPILER_DIR}/vertex-desc.json --rules ${KPHP_COMPILER_DIR}/rewrite-rules/early_opt.rules
         DEPENDS ${KPHP_COMPILER_DIR}/rewrite-rules/rules-gen.py ${KPHP_COMPILER_DIR}/rewrite-rules/early_opt.rules
         COMMENT "early_opt rules generation")
+endif()
+
 add_custom_target(auto_early_opt_rules_generation_target DEPENDS ${EARLY_OPT_RULES_AUTO_GENERATED})
 
 set_property(SOURCE ${KPHP_COMPILER_DIR}/kphp2cpp.cpp

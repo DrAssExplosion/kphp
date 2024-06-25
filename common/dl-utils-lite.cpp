@@ -8,7 +8,11 @@
 #include <cassert>
 #include <cinttypes>
 #include <errno.h>
-#include <execinfo.h>
+#ifndef MSYS
+  #include <execinfo.h>
+#else
+  #include "common/plug_execinfo.h"
+#endif
 #include <fcntl.h>
 #include <limits>
 #include <stdarg.h>

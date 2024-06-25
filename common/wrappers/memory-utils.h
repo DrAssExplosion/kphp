@@ -6,7 +6,9 @@
 
 #include <cassert>
 #include <sys/mman.h>
-#include <sys/syscall.h>
+#ifndef MSYS
+  #include <sys/syscall.h>
+#endif
 #include <unistd.h>
 
 #include "common/macos-ports.h"
@@ -20,10 +22,15 @@
 #endif
 
 inline int our_madvise(void *addr, size_t len, int advice) noexcept {
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-  return static_cast<int>(syscall(SYS_madvise, addr, len, advice));
-#pragma GCC diagnostic pop
+#ifdef MSYS
+  if (addr && len && advice) {};
+  return 0;
+#else
+  #pragma GCC diagnostic push
+  #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+    return static_cast<int>(syscall(SYS_madvise, addr, len, advice));
+  #pragma GCC diagnostic pop
+#endif
 }
 
 inline void *mmap_shared(size_t size, int fd = -1) noexcept {

@@ -4,7 +4,11 @@
 
 #include <cstring>
 #include <cinttypes>
-#include <execinfo.h>
+#ifndef MSYS
+  #include <execinfo.h>
+#else
+  #include "common/plug_execinfo.h"
+#endif
 #include <fcntl.h>
 #include <unistd.h>
 
@@ -77,6 +81,9 @@ bool copy_raw_string(char *&out, size_t out_size, vk::string_view str) noexcept 
 }
 
 int script_backtrace(void **buffer, int size) {
+#if defined(MSYS)
+  return 0;
+#else
   if (PhpScript::current_script == nullptr) {
     return 0;
   }
@@ -98,6 +105,7 @@ int script_backtrace(void **buffer, int size) {
   char *stack_start = PhpScript::current_script->script_stack.get_stack_ptr();
   char *stack_end = stack_start + PhpScript::current_script->script_stack.get_stack_size();
   return fast_backtrace_by_bp(rbp, stack_end, buffer, size);
+#endif
 }
 
 } // namespace

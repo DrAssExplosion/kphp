@@ -31,4 +31,8 @@ if(APPLE)
     list(APPEND POPULAR_COMMON_SOURCES ${COMMON_DIR}/macos-ports.cpp)
 endif()
 
+if (MSYS)
+    list(APPEND POPULAR_COMMON_SOURCES ${COMMON_DIR}/plug_execinfo.cpp)
+endif()
+
 vk_add_library(popular_common OBJECT ${POPULAR_COMMON_SOURCES})

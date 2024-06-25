@@ -79,7 +79,7 @@ Processes number to C++ parallel compilation/linkage, default **CPU cores**.
 
 A *.tl* file with [TL schema](../../kphp-client/tl-schema-and-rpc/tl-schema-basics.md), default empty.
 
-<aside>--Werror / -W / KPHP_ERROR_ON_WARNINGS = 0 | 1</aside>
+<aside>-W / KPHP_ERROR_ON_WARNINGS = 0 | 1</aside>
 
 All compile-time warnings will be treated as errors, default **0**.
 

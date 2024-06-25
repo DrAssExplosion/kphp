@@ -1901,9 +1901,11 @@ int main_args_handler(int i, const char *long_option) {
       return 0;
     }
     case 'k': {
+      #ifndef MSYS
       if (mlockall(MCL_CURRENT | MCL_FUTURE) != 0) {
         kprintf("error: fail to lock paged memory\n");
       }
+      #endif
       return 0;
     }
     case 'S': {
@@ -2105,7 +2107,7 @@ int main_args_handler(int i, const char *long_option) {
       return 0;
     }
     case 2027: {
-#if defined(__APPLE__)
+#if defined(__APPLE__) || defined(MSYS)
       kprintf("--%s option: NUMA is not available on macOS\n", long_option);
       return -1;
 #else
@@ -2144,7 +2146,7 @@ int main_args_handler(int i, const char *long_option) {
 #endif
     }
     case 2028: {
-#if defined(__APPLE__)
+#if defined(__APPLE__) || defined(MSYS)
       kprintf("--%s option: NUMA is not available on macOS\n", long_option);
       return -1;
 #else
@@ -2398,7 +2400,10 @@ void init_default() {
   aes_load_keys();
 
   do_relogin();
-  prctl(PR_SET_DUMPABLE, 1);
+
+  #ifndef MSYS
+    prctl(PR_SET_DUMPABLE, 1);
+  #endif
 
   if (!master_flag && !daemonize) {
     kstdout = dup(1);

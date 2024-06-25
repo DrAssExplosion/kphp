@@ -4,7 +4,11 @@
 
 #include "server/signal-handlers.h"
 
-#include <execinfo.h>
+#ifndef MSYS
+  #include <execinfo.h>
+#else
+  #include "common/plug_execinfo.h"
+#endif
 #include <sys/time.h>
 
 #include "common/kprintf.h"

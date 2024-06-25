@@ -1,3 +1,29 @@
+# Precompilation
+
+## 1 - Installing Packages
+
+* pacman -S git
+* pacman -S cmake
+* pacman -Syu make
+* pacman -Syu gcc
+* pacman -Syu python3
+* pacman -S mingw-w64-x86_64-openssl
+* pacman -S curl
+* pacman -S mingw-w64-x86_64-zlib
+* pacman -S mingw-w64-x86_64-zstd
+* pacman -S re2c
+* pacman -S mingw-w64-x86_64-re2
+* pacman -S mingw-w64-x86_64-curl
+* pacman -S mingw-w64-x86_64-pcre
+* pacman -S mingw-w64-x86_64-yaml-cpp
+* pacman -S mingw-w64-x86_64-python-jsonschema
+* pacman -S gperf
+
+## 2 - Changing the PHP path
+* ./cmake/init-global-vars.cmake  --- Added PHP PATH
+
+# ==============================================
+
 [![macos](https://github.com/VKCOM/kphp/actions/workflows/macos.yml/badge.svg)](https://github.com/VKCOM/kphp/actions/workflows/macos.yml)
 [![debian](https://github.com/VKCOM/kphp/actions/workflows/debian.yml/badge.svg)](https://github.com/VKCOM/kphp/actions/workflows/debian.yml)
 [![ubuntu](https://github.com/VKCOM/kphp/actions/workflows/ubuntu.yml/badge.svg)](https://github.com/VKCOM/kphp/actions/workflows/ubuntu.yml)
