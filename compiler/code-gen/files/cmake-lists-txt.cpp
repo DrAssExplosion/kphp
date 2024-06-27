@@ -42,6 +42,11 @@ add_executable({0} EXCLUDE_FROM_ALL ${{SRC_FILES}})
 target_include_directories({0} PRIVATE . ${{AUTO_DIR}}/runtime/)
 target_link_libraries({0} PRIVATE ${{RUNTIME_LIBS}} ${{RUNTIME_LINK_TEST_LIBS}}))cmake", target_name);
 
+//if (MSYS)
+//    add_definitions(-DMSYS=true)
+//endif()
+//)cmake", target_name);
+
   W << CloseFile{};
 }
 

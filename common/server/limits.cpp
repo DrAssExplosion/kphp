@@ -33,7 +33,7 @@ OPTION_PARSER_SHORT(OPT_NETWORK, "connections", 'c', required_argument, "sets ma
 int raise_proc_rlimit(int maxprocesses) {
   struct rlimit rlim;
 
-  #ifdef MSYS
+  #ifdef __MSYS__
     const bool isGetRlimitFailed = false;
     rlim.rlim_cur = kDefaultNumberOfLivingProcesses;
     rlim.rlim_max = kDefaultNumberOfLivingProcesses;
@@ -53,7 +53,7 @@ int raise_proc_rlimit(int maxprocesses) {
     }
 
       const bool isSetRlimitFailed =
-      #ifdef MSYS
+      #ifdef __MSYS__
         false;
       #else
         setrlimit(RLIMIT_NPROC, &rlim) != 0;

@@ -33,7 +33,7 @@
 #include "common/crc32c.h"
 #include "common/dl-utils-lite.h"
 #include "common/kprintf.h"
-#include "common/macos-ports.h"
+#include "common/ports.h"
 #include "common/precise-time.h"
 #include "common/server/tl-stats-t.h"
 #include "common/server/limits.h"
@@ -611,7 +611,7 @@ int run_worker(WorkerType worker_type) {
   dl_assert(new_pid != -1, "failed to fork");
 
   if (new_pid == 0) {
-    #ifndef MSYS
+    #ifndef __MSYS__
       prctl(PR_SET_PDEATHSIG, SIGKILL); // TODO: or SIGTERM
     #endif
     if (getppid() != me->pid) {

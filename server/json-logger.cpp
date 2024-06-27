@@ -4,7 +4,7 @@
 
 #include <cstring>
 #include <cinttypes>
-#ifndef MSYS
+#ifndef __MSYS__
   #include <execinfo.h>
 #else
   #include "common/plug_execinfo.h"
@@ -81,7 +81,7 @@ bool copy_raw_string(char *&out, size_t out_size, vk::string_view str) noexcept 
 }
 
 int script_backtrace(void **buffer, int size) {
-#if defined(MSYS)
+#if defined(__MSYS__)
   return 0;
 #else
   if (PhpScript::current_script == nullptr) {

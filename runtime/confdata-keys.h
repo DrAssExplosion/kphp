@@ -4,7 +4,10 @@
 
 #pragma once
 #include <array>
-#include <re2/re2.h>
+// TODO FIX !!!
+//#ifndef __MSYS__
+    #include <re2/re2.h>
+//#endif
 #include <forward_list>
 #include <unordered_map>
 #include <unordered_set>

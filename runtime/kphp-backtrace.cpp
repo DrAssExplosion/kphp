@@ -5,7 +5,7 @@
 #include "runtime/kphp-backtrace.h"
 
 #include <cxxabi.h>
-#ifndef MSYS
+#ifndef __MSYS__
   #include <execinfo.h>
 #else
   #include "common/plug_execinfo.h"

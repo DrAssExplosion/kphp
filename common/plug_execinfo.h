@@ -1,6 +1,6 @@
 #pragma once
 
-#ifdef MSYS
+#ifdef __MSYS__
 //#ifndef _COMMON_PLUG_EXECINFO_H
 //#define _COMMON_PLUG_EXECINFO_H
 

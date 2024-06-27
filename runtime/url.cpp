@@ -4,7 +4,7 @@
 
 #include "runtime/url.h"
 
-#include "common/macos-ports.h"
+#include "common/ports.h"
 
 #include "runtime/array_functions.h"
 #include "runtime/regexp.h"

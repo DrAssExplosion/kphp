@@ -9,7 +9,7 @@
 #include <stddef.h>
 #include <sys/socket.h>
 
-#include "common/macos-ports.h"
+#include "common/ports.h"
 #include "common/kprintf.h"
 
 #include "net/net-buffers.h"

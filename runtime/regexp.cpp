@@ -5,7 +5,10 @@
 #include "runtime/regexp.h"
 
 #include <cstddef>
-#include <re2/re2.h>
+// TODO FIX !!!
+//#ifndef __MSYS__
+    #include <re2/re2.h>
+//#endif
 #if ASAN_ENABLED
 #include <sanitizer/lsan_interface.h>
 #endif

@@ -4,7 +4,7 @@
 
 #pragma once
 
-#if defined(__x86_64__) && !defined(MSYS)
+#if defined(__x86_64__) && !defined(__MSYS__)
 // for x86 mac or x86/arm linux, we just use makecontext(), ucontext_t and other native functions
 #include <ucontext.h>
 

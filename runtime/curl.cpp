@@ -15,7 +15,7 @@
 #include "runtime/kphp_tracing.h"
 #include "runtime/string-list.h"
 
-#include "common/macos-ports.h"
+#include "common/ports.h"
 #include "common/smart_ptrs/singleton.h"
 #include "common/wrappers/to_array.h"
 #include "common/dl-utils-lite.h"

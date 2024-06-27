@@ -27,7 +27,7 @@
 #include "common/rpc-headers.h"
 #include "common/crc32.h"
 #include "common/c-tree.h"
-#include "common/macos-ports.h"
+#include "common/ports.h"
 
 #include "vkext/vkext-errors.h"
 #include "vkext/vkext-rpc-include.h"

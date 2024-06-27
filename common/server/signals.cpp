@@ -7,18 +7,18 @@
 #include <cerrno>
 #include <cstdlib>
 #include <cstring>
-//#ifndef MSYS
-//  #include <execinfo.h>
-//#else
+#ifndef __MSYS__
+  #include <execinfo.h>
+#else
   #include "common/plug_execinfo.h"
-//#endif
+#endif
 #include <fcntl.h>
 #include <pthread.h>
 #include <unistd.h>
 #include <unordered_set>
 
 #include "common/kprintf.h"
-#include "common/macos-ports.h"
+#include "common/ports.h"
 #include "common/options.h"
 #include "common/server/crash-dump.h"
 #include "common/server/engine-settings.h"
@@ -121,7 +121,7 @@ const char *signal_shortname(int sig) {
     case SIGIO: return "SIGIO";
     case SIGSYS: return "SIGSYS";
     default: {
-#if !defined(__APPLE__) && !defined(MSYS)
+#if !defined(__APPLE__) && !defined(__MSYS__)
       if (sig == SIGPWR) { return "SIGPWR"; }
       if (sig == SIGSTKFLT) { return "SIGSTKFLT"; }
       if (sig == SIGRTMAX - 0) { return "SIGRTMAX"; }

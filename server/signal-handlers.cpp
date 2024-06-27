@@ -4,7 +4,7 @@
 
 #include "server/signal-handlers.h"
 
-#ifndef MSYS
+#ifndef __MSYS__
   #include <execinfo.h>
 #else
   #include "common/plug_execinfo.h"

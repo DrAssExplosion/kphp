@@ -10,7 +10,7 @@
 #include <sys/stat.h>
 
 #include "common/algorithms/find.h"
-#include "common/macos-ports.h"
+#include "common/ports.h"
 
 #include "compiler/stage.h"
 #include "common/wrappers/fmt_format.h"

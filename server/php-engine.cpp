@@ -14,7 +14,10 @@
 #include <netdb.h>
 #include <netinet/in.h>
 #include <poll.h>
-#include <re2/re2.h>
+// TODO FIX !!!
+//#ifndef __MSYS__
+    #include <re2/re2.h>
+//#endif
 #include <string>
 #include <sys/mman.h>
 #include <sys/socket.h>
@@ -28,7 +31,7 @@
 #include "common/dl-utils-lite.h"
 #include "common/kernel-version.h"
 #include "common/kprintf.h"
-#include "common/macos-ports.h"
+#include "common/ports.h"
 #include "common/options.h"
 #include "common/pipe-utils.h"
 #include "common/precise-time.h"
@@ -1901,7 +1904,7 @@ int main_args_handler(int i, const char *long_option) {
       return 0;
     }
     case 'k': {
-      #ifndef MSYS
+      #ifndef __MSYS__
       if (mlockall(MCL_CURRENT | MCL_FUTURE) != 0) {
         kprintf("error: fail to lock paged memory\n");
       }
@@ -2107,7 +2110,7 @@ int main_args_handler(int i, const char *long_option) {
       return 0;
     }
     case 2027: {
-#if defined(__APPLE__) || defined(MSYS)
+#if defined(__APPLE__) || defined(__MSYS__)
       kprintf("--%s option: NUMA is not available on macOS\n", long_option);
       return -1;
 #else
@@ -2146,7 +2149,7 @@ int main_args_handler(int i, const char *long_option) {
 #endif
     }
     case 2028: {
-#if defined(__APPLE__) || defined(MSYS)
+#if defined(__APPLE__) || defined(__MSYS__)
       kprintf("--%s option: NUMA is not available on macOS\n", long_option);
       return -1;
 #else
@@ -2401,7 +2404,7 @@ void init_default() {
 
   do_relogin();
 
-  #ifndef MSYS
+  #ifndef __MSYS__
     prctl(PR_SET_DUMPABLE, 1);
   #endif
 

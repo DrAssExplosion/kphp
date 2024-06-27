@@ -12,7 +12,7 @@
 #include "common/algorithms/find.h"
 #include "common/containers/final_action.h"
 #include "common/fast-backtrace.h"
-#include "common/macos-ports.h"
+#include "common/ports.h"
 #include "common/wrappers/likely.h"
 
 #include "runtime/critical_section.h"
@@ -303,7 +303,7 @@ MemoryReplacementGuard::~MemoryReplacementGuard() {
 } // namespace dl
 
 // sanitizers aren't happy with custom realization of malloc-like functions
-#if !ASAN_ENABLED and !defined(__APPLE__) and !defined(MSYS)
+#if !ASAN_ENABLED and !defined(__APPLE__) and !defined(__MSYS__)
 
 extern "C" void *__libc_malloc(size_t size);
 extern "C" void *__libc_calloc(size_t nmemb, size_t size);

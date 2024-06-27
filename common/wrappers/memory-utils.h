@@ -6,12 +6,12 @@
 
 #include <cassert>
 #include <sys/mman.h>
-#ifndef MSYS
+#ifndef __MSYS__
   #include <sys/syscall.h>
 #endif
 #include <unistd.h>
 
-#include "common/macos-ports.h"
+#include "common/ports.h"
 
 #ifndef MADV_FREE
   #define MADV_FREE 8
@@ -22,7 +22,7 @@
 #endif
 
 inline int our_madvise(void *addr, size_t len, int advice) noexcept {
-#ifdef MSYS
+#ifdef __MSYS__
   if (addr && len && advice) {};
   return 0;
 #else

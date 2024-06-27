@@ -12,7 +12,7 @@
 
 
 bool NumaConfiguration::add_numa_node([[maybe_unused]] int numa_node_id, [[maybe_unused]] const bitmask *cpu_mask) {
-#if defined(__APPLE__) || defined(MSYS)
+#if defined(__APPLE__) || defined(__MSYS__)
   return false;
 #else
   assert(numa_available() >= 0);
@@ -47,7 +47,7 @@ bool NumaConfiguration::add_numa_node([[maybe_unused]] int numa_node_id, [[maybe
 }
 
 void NumaConfiguration::distribute_process([[maybe_unused]] int numa_node_id, [[maybe_unused]] const cpu_set_t &cpu_mask) const {
-#if !defined(__APPLE__) && !defined(MSYS)
+#if !defined(__APPLE__) && !defined(__MSYS__)
   assert(numa_available() >= 0);
 
   int res = sched_setaffinity(0, sizeof(cpu_set_t), &cpu_mask);

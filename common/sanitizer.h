@@ -4,7 +4,7 @@
 
 #pragma once
 
-#ifndef MSYS
+#ifndef __MSYS__
   #include <sanitizer/asan_interface.h>
 #endif
 

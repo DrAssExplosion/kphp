@@ -14,7 +14,7 @@
 
 #include "common/dl-utils-lite.h"
 #include "common/kprintf.h"
-#include "common/macos-ports.h"
+#include "common/ports.h"
 #include "common/wrappers/memory-utils.h"
 #include "server/php-master-restart.h"
 
@@ -24,7 +24,7 @@ shared_data_t *shared_data;
 master_data_t *me, *other; // these are pointers to shared memory
 
 void init_mutex(pthread_mutex_t *mutex) {
-  #ifndef MSYS
+  #ifndef __MSYS__
   pthread_mutexattr_t attr;
 
   int err;

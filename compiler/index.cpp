@@ -9,7 +9,7 @@
 #include <ftw.h>
 #include <sys/stat.h>
 
-#include "common/macos-ports.h"
+#include "common/ports.h"
 #include "common/containers/final_action.h"
 #include "common/wrappers/mkdir_recursive.h"
 #include "compiler/kphp_assert.h"

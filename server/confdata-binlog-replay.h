@@ -3,8 +3,11 @@
 // Distributed under the GPL v3 License, see LICENSE.notice.txt
 
 #pragma once
-#include <re2/re2.h>
 
+// TODO FIX !!!
+//#ifndef __MSYS__
+    #include <re2/re2.h>
+//#endif
 #include "common/stats/provider.h"
 
 #include "runtime/allocator.h"

@@ -4,7 +4,10 @@
 
 #include "compiler/pipes/register-kphp-configuration.h"
 
-#include <re2/re2.h>
+// TODO FIX !!!
+//#ifndef __MSYS__
+    #include <re2/re2.h>
+//#endif
 
 #include "common/algorithms/find.h"
 #include "compiler/compiler-core.h"

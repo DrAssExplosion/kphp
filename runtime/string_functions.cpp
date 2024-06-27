@@ -8,7 +8,7 @@
 #include <sys/types.h>
 #include <cctype>
 
-#include "common/macos-ports.h"
+#include "common/ports.h"
 #include "common/unicode/unicode-utils.h"
 
 #include "runtime/interface.h"

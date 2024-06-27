@@ -157,10 +157,21 @@ void append_apple_options(std::string &cxx_flags, std::string &ld_flags) noexcep
               " -L" + common_path + "/opt/libpq/lib"
 #endif
               " -L" + common_path + "/opt/openssl/lib";
-
 #else
   static_cast<void>(cxx_flags);
   static_cast<void>(ld_flags);
+#endif
+}
+
+void append_msys_options(std::string &cxx_flags, std::string &ld_flags) noexcept {
+#ifdef __MSYS__
+  cxx_flags += " -I/mingw64/include";
+  ld_flags += " -L/mingw64/lib";
+              //" -DMSYS=true";
+             // " -undefined dynamic_lookup";
+#else
+    static_cast<void>(cxx_flags);
+    static_cast<void>(ld_flags);
 #endif
 }
 
@@ -194,7 +205,7 @@ void CxxFlags::init(const std::string &runtime_sha256, const std::string &cxx,
   remove_extra_spaces(cxx_flags_line);
   flags.value_ = std::move(cxx_flags_line);
   flags_sha256.value_ = calc_cxx_flags_sha256(cxx, flags.get());
-  flags.value_.append(" -iquote").append(dest_cpp_dir);
+  flags.value_.append(" -iquote").append("\"").append(dest_cpp_dir).append("\"");
   if (enable_pch) {
     pch_dir.value_.append("/tmp/kphp_pch/").append(runtime_sha256).append("/").append(flags_sha256.get()).append("/");
   }
@@ -270,9 +281,8 @@ void CompilerSettings::init() {
   std::stringstream ss;
   ss << "-Wall "
      << extra_cxx_flags.get()
-     << " -iquote" << kphp_src_path.get()
-     << " -iquote " << kphp_src_path.get()
-     << "objs/generated/auto/runtime"
+     << " -iquote" << std::string("\"").append(kphp_src_path.get()).append("\"")
+     << " -iquote " << std::string("\"").append(kphp_src_path.get()).append("objs/generated/auto/runtime").append("\"")
      << " -fwrapv -Wno-parentheses -Wno-trigraphs"
      << " -fno-strict-aliasing -fno-omit-frame-pointer";
 #ifdef __x86_64__
@@ -307,6 +317,7 @@ void CompilerSettings::init() {
   ld_flags.value_ = extra_ld_flags.get();
   append_curl(cxx_default_flags, ld_flags.value_);
   append_apple_options(cxx_default_flags, ld_flags.value_);
+  append_msys_options(cxx_default_flags, ld_flags.value_);
   std::vector<vk::string_view> external_static_libs{"pcre", "re2", "yaml-cpp", "h3", "z", "zstd", "nghttp2", "kphp-timelib"};
 
 #ifdef KPHP_TIMELIB_LIB_DIR

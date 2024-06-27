@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include <mutex>
 #include <thread>
-#ifndef MSYS
+#ifndef __MSYS__
   #include <sys/syscall.h>
 #endif
 
@@ -26,7 +26,7 @@ template<class F>
 auto with_this_pid(F f) noexcept {
   static std::mutex pid_mutex;
   std::lock_guard<std::mutex> l{pid_mutex};
-#ifndef MSYS
+#ifndef __MSYS__
   pid = syscall(SYS_gettid);
 #endif
   return f();
