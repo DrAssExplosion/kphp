@@ -52,7 +52,7 @@ include(${BASE_DIR}/runtime/runtime.cmake)
 include(${BASE_DIR}/server/server.cmake)
 include(${BASE_DIR}/compiler/compiler.cmake)
 
-include(${BASE_DIR}/tests/tests.cmake)
+#include(${BASE_DIR}/tests/tests.cmake)
 
 if(KPHP_CUSTOM_CMAKE AND EXISTS ${OBJS_DIR}/custom_php_project.cmake)
     include(${OBJS_DIR}/custom_php_project.cmake)

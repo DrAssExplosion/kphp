@@ -11,6 +11,10 @@
 #include "common/cycleclock.h"
 #include "common/wrappers/likely.h"
 
+#ifdef __MSYS__
+#include <sys/signal.h>
+#endif
+
 enum class ExtraSignalAction {
   GENERATE_COREDUMP = 1
 };

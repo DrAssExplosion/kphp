@@ -165,7 +165,7 @@ void append_apple_options(std::string &cxx_flags, std::string &ld_flags) noexcep
 
 void append_msys_options(std::string &cxx_flags, std::string &ld_flags) noexcept {
 #ifdef __MSYS__
-  cxx_flags += " -I/mingw64/include";
+  cxx_flags += " -I/mingw64/include -fpermissive -D_XOPEN_SOURCE=700";
   ld_flags += " -L/mingw64/lib";
               //" -DMSYS=true";
              // " -undefined dynamic_lookup";

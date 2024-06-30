@@ -20,6 +20,10 @@
 #include <unistd.h>
 #include <stdint.h>
 #include <sys/signal.h>
+#include <cstring>
+
+//#include <sys/sendfile.h>
+//#include <cstring>
 // #define htobe64(x) OSSwapHostToBigInt64(x)
 // #define htole64(x) OSSwapHostToLittleInt64(x)
 // #define be64toh(x) OSSwapBigToHostInt64(x)
@@ -76,7 +80,8 @@ inline char *__xpg_basename(char *path) noexcept {
 inline int pipe2(int pipefd[2], int flags) noexcept {
   const int res = pipe(pipefd);
   if (res != -1) {
-    if (flags & O_CLOEXEC) {
+    //if (flags & O_CLOEXEC) {
+    if (flags & FD_CLOEXEC) {
       fcntl(pipefd[0], F_SETFD, FD_CLOEXEC);
       fcntl(pipefd[1], F_SETFD, FD_CLOEXEC);
     }
@@ -143,16 +148,16 @@ inline int pthread_mutex_consistent(pthread_mutex_t *) noexcept {
 //   return malloc_size(ptr);
 // }
 
-//void *memmem(void *haystack, size_t haystacklen, void *needle, size_t needlelen)
-void *memmem(char *haystack, size_t haystacklen, char *needle, size_t needlelen)
+void *memmem(void *haystack, size_t haystacklen, void *needle, size_t needlelen)
+//void *memmem(char *haystack, size_t haystacklen, char *needle, size_t needlelen)
 {
    char *bf = (char*) haystack, *pt = (char*) needle, *p = bf;
  
    while (needlelen <= (haystacklen - (p - bf)))
    {
-      if (NULL != (p = memchr(p, (int)(*pt), haystacklen - (p - bf))))
+      if (NULL != (p = (char*)std::memchr(p, (int)(*pt), haystacklen - (p - bf))))
       {
-         if (0 == memcmp(p, needle, needlelen))
+         if (0 == std::memcmp(p, needle, needlelen))
             return p;
          else
             ++p;
