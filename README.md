@@ -5,7 +5,10 @@
 * pacman -S cmake mingw-w64-x86_64-openssl mingw-w64-x86_64-zlib mingw-w64-x86_64-zstd mingw-w64-x86_64-pcre mingw-w64-x86_64-curl mingw-w64-x86_64-re2 mingw-w64-x86_64-python-jsonschema mingw-w64-x86_64-yaml-cpp gperf re2c curl
 * pacman -Syu make gcc python3
 
-## 2 - Changing the PHP path
+## 2 - Download PHP
+* https://windows.php.net/download
+
+## 3 - Changing the PHP path
 * ./cmake/init-global-vars.cmake  --- Added PHP PATH
 
 # ==============================================
