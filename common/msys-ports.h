@@ -148,8 +148,9 @@ inline int pthread_mutex_consistent(pthread_mutex_t *) noexcept {
 //   return malloc_size(ptr);
 // }
 
-void *memmem(void *haystack, size_t haystacklen, void *needle, size_t needlelen)
+//void *memmem(void *haystack, size_t haystacklen, void *needle, size_t needlelen)
 //void *memmem(char *haystack, size_t haystacklen, char *needle, size_t needlelen)
+inline const void *memmem(void *haystack, size_t haystacklen, void *needle, size_t needlelen) noexcept
 {
    char *bf = (char*) haystack, *pt = (char*) needle, *p = bf;
  
@@ -165,6 +166,8 @@ void *memmem(void *haystack, size_t haystacklen, void *needle, size_t needlelen)
       else
          break;
    }
+
+   return nullptr;
 }
 
 //////////////////////////////////////////

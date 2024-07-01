@@ -130,6 +130,10 @@ void append_curl(std::string &cxx_flags, std::string &ld_flags) noexcept {
 #if defined(__APPLE__)
     static_cast<void>(cxx_flags);
     ld_flags += " -lcurl";
+#elif defined(__MSYS__)
+    const std::string curl_dir = "/mingw64";
+    cxx_flags += " -I" + curl_dir + "/include/";
+    ld_flags += " " + curl_dir + "/lib/libcurl.dll.a";
 #else
     // TODO make it as an option?
     const std::string curl_dir = "/opt/curl7600";
@@ -205,7 +209,7 @@ void CxxFlags::init(const std::string &runtime_sha256, const std::string &cxx,
   remove_extra_spaces(cxx_flags_line);
   flags.value_ = std::move(cxx_flags_line);
   flags_sha256.value_ = calc_cxx_flags_sha256(cxx, flags.get());
-  flags.value_.append(" -iquote").append("\"").append(dest_cpp_dir).append("\"");
+  flags.value_.append(" -iquote").append(dest_cpp_dir);
   if (enable_pch) {
     pch_dir.value_.append("/tmp/kphp_pch/").append(runtime_sha256).append("/").append(flags_sha256.get()).append("/");
   }
@@ -281,8 +285,9 @@ void CompilerSettings::init() {
   std::stringstream ss;
   ss << "-Wall "
      << extra_cxx_flags.get()
-     << " -iquote" << std::string("\"").append(kphp_src_path.get()).append("\"")
-     << " -iquote " << std::string("\"").append(kphp_src_path.get()).append("objs/generated/auto/runtime").append("\"")
+     << " -iquote" << kphp_src_path.get()
+     << " -iquote " << kphp_src_path.get()
+     << "objs/generated/auto/runtime"
      << " -fwrapv -Wno-parentheses -Wno-trigraphs"
      << " -fno-strict-aliasing -fno-omit-frame-pointer";
 #ifdef __x86_64__

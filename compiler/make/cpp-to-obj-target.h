@@ -23,7 +23,7 @@ public:
     // make #include "runtime-headers.h" capture generated pch file
     // it's done via -iquote to a folder inside /tmp/kphp_gch where runtime-headers.h with pch file are placed
     if (!settings->no_pch.get()) {
-      ss << " -iquote " << std::string("\"").append(cxx_flags.pch_dir.get()).append("\"");
+      ss << " -iquote " << cxx_flags.pch_dir.get();
       if (vk::contains(settings->cxx.get(), "clang")) {
         ss << " -include " << cxx_flags.pch_dir.get() << settings->runtime_headers.get();
       };
